@@ -1,0 +1,103 @@
+* {
+      padding: 0px;
+      margin: 0px;
+      box-sizing: border-box;
+      text-transform: uppercase;
+}
+
+body{
+      background-color: #1A2A33;
+      color: #1A2A33;
+      font-family: Outfit, Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.8px;
+}
+
+main{
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+}
+
+/* NEW GAME MENU */
+#new-game-section {
+      color: #A8BFC9;
+      width: 460px;
+      height: 471px;
+      display: grid;
+      grid-template-columns: 1fr;
+}
+
+.logo-container {
+      text-align: center;
+}
+
+#select-player-mark {
+      background-color: #1F3641;
+      height: 205px;
+      margin: 40px 0px;
+      border-radius: 15px;
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      align-items: center;
+}
+
+.pick-player-p {
+      font-size: 16px;
+      font-weight:bold;
+      letter-spacing: 1px;
+}
+
+#mark-selector{
+      width: 412px;
+      height: 54px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+}
+
+.mark{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+}
+
+.mark:hover {
+      cursor: pointer;
+}
+
+.new-game-btn {
+      height: 61px;
+      color: #1A2A33;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight:bold;
+      border: none;
+      letter-spacing: 1.25px;
+}
+
+.new-game-btn:hover {
+      cursor: pointer;
+}
+
+.select-CPU-btn{
+      background-color: #F2B137;
+      margin-bottom: 20px;
+      box-shadow: 0px 6px #f2b1379e;
+}
+
+.select-CPU-btn:hover{
+      background-color: #FFC860;
+}
+
+.select-2player-btn {
+      background-color: #31C3BD;
+      box-shadow: 0px 6px #31c3be93;
+}
+
+.select-2player-btn:hover{
+      background-color: #65E9E4;
+}
