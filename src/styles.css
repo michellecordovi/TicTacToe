@@ -28,6 +28,7 @@ main{
       height: 471px;
       display: grid;
       grid-template-columns: 1fr;
+      display: none;
 }
 
 .logo-container {
@@ -36,13 +37,14 @@ main{
 
 #select-player-mark {
       background-color: #1F3641;
-      height: 205px;
+      height: 199px;
       margin: 40px 0px;
       border-radius: 15px;
       display: grid;
       grid-template-columns: 1fr;
       justify-items: center;
       align-items: center;
+      box-shadow: 0px 6px #142329;
 }
 
 .pick-player-p {
@@ -100,4 +102,117 @@ main{
 
 .select-2player-btn:hover{
       background-color: #65E9E4;
+}
+
+
+
+/* GAME BOARD */
+#game-board {
+      width: 460px;
+      height: 623px;
+}
+
+.game-header{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr ;
+      column-gap: 20px;
+      align-items: center;
+}
+
+.game-header .logo-container {
+      justify-self: start;
+}
+
+.turn-display{
+      background-color:#1F3641;
+      color:#A8BFC9;
+      font-weight: bold;
+      width: 140px;
+      height: 48px;
+      border-radius: 10px;
+      font-size: 16px;
+      box-shadow: 0px 4px #142329;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+}
+
+.turn {
+      display: flex;
+      align-items: center;
+}
+
+.turn-O {
+      display: none;
+}
+
+.restart-btn{
+      background-color: #A8BFC9;
+      width: 52px;
+      height: 50px;
+      border-radius: 10px;
+      justify-self: end;
+      border: none;
+      box-shadow: 0px 4px #a8bfc9a0;
+}
+
+.restart-btn:hover {
+      background-color: #DBE8ED;
+}
+
+.restart-btn:hover{
+      cursor: pointer;
+}
+
+.game-board-grid {
+      margin: 20px 0px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 20px;
+      row-gap: 20px;
+}
+
+.game-board-box {
+      background-color:#1F3641;
+      width: 140px;
+      height: 133px;
+      border-radius: 15px;
+      box-shadow: 0px 7px #142329;
+}
+
+.game-points {
+      height: 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 20px;
+}
+
+.point-box{
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+}
+
+.player {
+      font-weight: bold;
+}
+
+.points{
+      font-size: 24px;
+      font-weight: bold;
+}
+
+.player1-points{
+      background-color: #31C3BD;
+}
+
+.ties{
+      background-color:#A8BFC9;
+}
+
+.player2-points{
+      background-color: #F2B137;
 }
