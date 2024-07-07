@@ -28,7 +28,6 @@ main{
       height: 471px;
       display: grid;
       grid-template-columns: 1fr;
-      display: none;
 }
 
 .logo-container {
@@ -110,6 +109,7 @@ main{
 #game-board {
       width: 460px;
       height: 623px;
+      display: none;
 }
 
 .game-header{
