@@ -27,7 +27,49 @@ for (let i = 0; i < markSelectors.length; i++) {
       }
 }
 
+//when button for CPU or 2 player is clicked, if x is selected then player X is you
+
+//setting up players
+let playerX = {};
+let playerO = {};
 
 
 
+//GAME INTERACTION
+const boxes = document.getElementsByClassName("game-board-box");
 
+
+//GAME LOGIC
+
+
+//game board
+const gameBoard = {
+      board: [
+            [boxes[0], boxes[1], boxes[2]],
+            [2, "2", ""],
+            [3, "","4"]
+      ],
+
+      get column1() {
+            return this.board.map(row => row[0])
+      },
+
+      get column2() {
+            return this.board.map(row => row[1])
+      },
+
+      get column3() {
+            return this.board.map(row => row[2])
+      },
+
+      get diagonal1() {
+            return [this.board[0][0], this.board[1][1], this.board[2][2]]
+      },
+
+      get diagonal2() {
+            return [this.board[0][2], this.board[1][1], this.board[2][0]]
+      }
+}
+
+
+console.log(gameBoard.board[0][0])
