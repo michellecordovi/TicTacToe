@@ -179,6 +179,9 @@ main{
       height: 133px;
       border-radius: 15px;
       box-shadow: 0px 7px #142329;
+      display: flex;
+      justify-content: center; 
+      align-items: center;
 }
 
 .game-points {

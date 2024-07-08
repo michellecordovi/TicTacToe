@@ -26,51 +26,6 @@ for (let i = 0; i < markSelectors.length; i++) {
             unselectMark(selectedMark);
              selectedMark = markSelectors[i];
             selectMark(markSelectors[i]);
-            console.log(selectedMark)
-      }
-}
-
-//when button for CPU or 2 player is clicked, if x is selected then player X is you
-
-//start game buttons
-const startNewGameBtns = document.getElementsByClassName("new-game-btn");
-const cpuGameBtn = startNewGameBtns[0];
-const twoPlayerBtn = startNewGameBtns[1];
-
-//setting up players
-let playerX;
-let playerO;
-let turn;
-let Xmarker = '<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z" fill="#31C3BD" fill-rule="evenodd"/></svg>'
-let Omarker = '<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M32 0c17.673 0 32 14.327 32 32 0 17.673-14.327 32-32 32C14.327 64 0 49.673 0 32 0 14.327 14.327 0 32 0Zm0 18.963c-7.2 0-13.037 5.837-13.037 13.037 0 7.2 5.837 13.037 13.037 13.037 7.2 0 13.037-5.837 13.037-13.037 0-7.2-5.837-13.037-13.037-13.037Z" fill="#F2B137"/></svg>'
-
-//function to create human players and computer
-function createHumanPlayer(playerNum, mark) {
-      return {
-            player: playerNum,
-            mark: mark,
-            selectBox(box) {
-                  if (this.mark === "x") {
-                        box.appendChild(Xmarker);
-                  } else {
-                        box.appendChild(Omarker);
-                  }
-            }
-      }
-}
-
-function createCompPlayer(mark) {
-      return {
-            player: "computer",
-            mark: mark,
-
-            selectBox(box) {
-                  if (this.mark === "x") {
-                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].appendChild(Xmarker);
-                  } else {
-                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].appendChild(Omarker);
-                  }
-            }
       }
 }
 
@@ -81,13 +36,10 @@ function startGame(){
       gameBoardPage.style.display = "grid";
 }
 
-
 //GAME INTERACTION
 const boxes = document.getElementsByClassName("game-board-box");
 
-
 //GAME LOGIC
-
 
 //game board
 const gameBoard = {
@@ -115,5 +67,81 @@ const gameBoard = {
 
       get diagonal2() {
             return [this.board[0][2], this.board[1][1], this.board[2][0]]
+      }
+}
+
+//when button for CPU or 2 player is clicked, if x is selected then player X is you
+
+//start game buttons
+const startNewGameBtns = document.getElementsByClassName("new-game-btn");
+const cpuGameBtn = startNewGameBtns[0];
+const twoPlayerBtn = startNewGameBtns[1];
+
+//setting up players
+let playerX;
+let playerO;
+let turn;
+let Xmarker = '<img src="./assets/icon-x.svg" alt="">'
+let Omarker = '<img src="./assets/icon-o.svg" alt="">'
+
+//function to create human players and computer
+function createHumanPlayer(playerNum, mark) {
+      return {
+            player: playerNum,
+            mark: mark,
+            selectBox(box) {
+                  if (this.mark === "x" && turn === playerX) {
+                        box.innerHTML = Xmarker;
+                        turn = playerO;
+                  } else if(this.mark === "o" && turn === playerO){
+                        box.innerHTML = Omarker;
+                        turn = playerX;
+                  }
+            }
+      }
+}
+
+function createCompPlayer(mark) {
+      return {
+            player: "computer",
+            mark: mark,
+
+            selectBox() {
+                  if (this.mark === "x" && turn === playerX) {
+                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].innerHTML = Xmarker;
+                  } else if(this.mark === "o" && turn === playerO){
+                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].innerHTML = Omarker;
+                  }
+            }
+      }
+}
+
+function switchTurns() {
+      if (turn === playerX) {
+            turn = playerO;
+      } else {
+            turn = playerX;
+      }
+}
+
+
+cpuGameBtn.onclick = () => {
+      startGame();
+
+      if (selectedMark === markSelectors[0]) {
+            playerX = createHumanPlayer(1, "x")
+            playerO = createCompPlayer("o");
+            turn = playerX;
+      } else {
+            playerO = createHumanPlayer(1, "o")
+            playerX = createCompPlayer("x");
+            playerX.selectBox();
+            turn = playerO;
+      }
+}
+
+for (let i = 0; i < boxes.length; i++) {
+      boxes[i].onclick = () => {
+            turn.selectBox(boxes[i]);
       }
 }
