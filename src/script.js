@@ -34,6 +34,14 @@ for (let i = 0; i < markSelectors.length; i++) {
 function startGame(){
       startMenu.style.display = "none";
       gameBoardPage.style.display = "grid";
+
+      if (turn === "x") {
+            document.querySelector(".turn-X").style.display = "block";
+            document.querySelector(".turn-O").style.display = "none";
+      } else {
+            document.querySelector(".turn-X").style.display = "none";
+            document.querySelector(".turn-O").style.display = "block";
+      }
 }
 
 //GAME INTERACTION
@@ -81,8 +89,8 @@ const twoPlayerBtn = startNewGameBtns[1];
 let playerX;
 let playerO;
 let turn;
-let Xmarker = '<img src="./assets/icon-x.svg" alt="">'
-let Omarker = '<img src="./assets/icon-o.svg" alt="">'
+const Xmarker = '<img src="./assets/icon-x.svg" alt="">'
+const Omarker = '<img src="./assets/icon-o.svg" alt="">'
 
 //function to create human players and computer
 function createHumanPlayer(playerNum, mark) {
@@ -90,16 +98,17 @@ function createHumanPlayer(playerNum, mark) {
             player: playerNum,
             mark: mark,
             selectBox(box) {
-                  if (this.mark === "x" && turn === playerX) {
+                  if (this.mark === "x" && turn === "x") {
                         box.innerHTML = Xmarker;
-                        turn = playerO;
-                  } else if(this.mark === "o" && turn === playerO){
+                        switchTurns();
+                  } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
-                        turn = playerX;
+                        switchTurns();
                   }
             }
       }
 }
+
 
 function createCompPlayer(mark) {
       return {
@@ -107,41 +116,71 @@ function createCompPlayer(mark) {
             mark: mark,
 
             selectBox() {
-                  if (this.mark === "x" && turn === playerX) {
-                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].innerHTML = Xmarker;
-                  } else if(this.mark === "o" && turn === playerO){
-                        gameBoard.board[Math.floor(Math.random() * 3)][Math.floor(Math.random() * 3)].innerHTML = Omarker;
+                  if ((this.mark === "x") && (turn === "x")) {
+                        let selectedBox = boxes[Math.floor(Math.random() * 9)];
+
+                        while (selectedBox.hasChildNodes() === true) {
+                              selectedBox = boxes[Math.floor(Math.random() * 9)]
+                        }
+
+                        selectedBox.innerHTML = Xmarker;
+                        switchTurns();
+                        
+                  } else if((this.mark === "o") && (turn === "o")){
+                        let selectedBox = boxes[Math.floor(Math.random() * 9)];
+
+                        while (selectedBox.hasChildNodes() === true) {
+                              selectedBox = boxes[Math.floor(Math.random() * 9)]
+                        }
+
+                        selectedBox.innerHTML = Omarker;
+                        switchTurns();
                   }
             }
       }
 }
 
 function switchTurns() {
-      if (turn === playerX) {
-            turn = playerO;
+      if (turn === "x") {
+            turn = "o";
+            document.querySelector(".turn-X").style.display = "none";
+            document.querySelector(".turn-O").style.display = "block";
+            console.log(turn)
       } else {
-            turn = playerX;
+            turn = "x";
+            document.querySelector(".turn-X").style.display = "block";
+            document.querySelector(".turn-O").style.display = "none";
+            console.log(turn)
       }
 }
 
 
 cpuGameBtn.onclick = () => {
       startGame();
+      turn = "x";
 
       if (selectedMark === markSelectors[0]) {
             playerX = createHumanPlayer(1, "x")
             playerO = createCompPlayer("o");
-            turn = playerX;
       } else {
             playerO = createHumanPlayer(1, "o")
             playerX = createCompPlayer("x");
             playerX.selectBox();
-            turn = playerO;
       }
 }
 
 for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
-            turn.selectBox(boxes[i]);
+            if (turn === "x" && boxes[i].hasChildNodes() === false) {
+                  playerX.selectBox(boxes[i]);
+                  if (playerO.player === "computer") {
+                        playerO.selectBox();
+                  }
+            } else if (turn === "o" && boxes[i].hasChildNodes() === false){
+                  playerO.selectBox(boxes[i]);
+                  if (playerX.player === "computer") {
+                        playerX.selectBox();
+                  }
+            }
       }
 }
