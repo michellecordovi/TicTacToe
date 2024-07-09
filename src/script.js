@@ -217,13 +217,10 @@ function checkForWin() {
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Xmarker)) {
                   return true;
-            } 
-      }
-      for (let property in gameBoard) {
-            if (gameBoard[property].every(box => box.innerHTML === Omarker)) {
+            } else if(gameBoard[property].every(box => box.innerHTML === Omarker)) {
                   return true
-            } 
-      }   
+            }
+      }
 }
 
 function displayEndGameModal() {
@@ -278,4 +275,32 @@ restartButton.onclick = () => {
             }, 500)
       }
 
+}
+
+//QUIT GAME
+quitButton.onclick = () => {
+      for (let i = 0; i < boxes.length; i++) {
+            while (boxes[i].firstChild) {
+                  boxes[i].removeChild(boxes[i].firstChild)
+            }
+      }
+
+      playerX = undefined;
+      playerO = undefined;
+      turn="x"
+      Xpoints = 0;
+      Opoints = 0;
+      gameEndModal.style.display = "none";
+      gameBoardPage.style.display = "none";
+      startMenu.style.display = "grid";
+}
+
+nextRoundButton.onclick = () => {
+      for (let i = 0; i < boxes.length; i++) {
+            while (boxes[i].firstChild) {
+                  boxes[i].removeChild(boxes[i].firstChild)
+            }
+      }
+
+      gameEndModal.style.display = "none";
 }
