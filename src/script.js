@@ -1,6 +1,7 @@
 //NEW GAME MENU START
 const startMenu = document.getElementById("new-game-section");
 const gameBoardPage = document.getElementById("game-board");
+const gameEndModal = document.getElementById("game-end-modal")
 
 //select X or O
 const markSelectors = document.getElementsByClassName("mark");
@@ -47,8 +48,6 @@ function startGame(){
 //GAME INTERACTION
 const boxes = document.getElementsByClassName("game-board-box");
 
-//GAME LOGIC
-
 //game board
 const gameBoard = {
      
@@ -71,10 +70,35 @@ const startNewGameBtns = document.getElementsByClassName("new-game-btn");
 const cpuGameBtn = startNewGameBtns[0];
 const twoPlayerBtn = startNewGameBtns[1];
 
+//START CPU GAME
+cpuGameBtn.onclick = () => {
+      startGame();
+      turn = "x";
+      playerXPoints.innerHTML = "0";
+      playerOPoints.innerHTML = "0";
+
+      if (selectedMark === markSelectors[0]) {
+            playerX = createHumanPlayer(1, "x")
+            playerO = createCompPlayer("o");
+            document.querySelector(".player-X").innerHTML = " (you)";
+            document.querySelector(".player-O").innerHTML = " (CPU)";
+      } else {
+            playerO = createHumanPlayer(1, "o")
+            playerX = createCompPlayer("x");
+            document.querySelector(".player-O").innerHTML = " (you)";
+            document.querySelector(".player-X").innerHTML = " (CPU)";
+            playerX.selectBox();
+      }
+}
+
 //setting up players
 let playerX;
 let playerO;
 let turn;
+let playerXPoints = document.querySelector(".player-X-points");
+let playerOPoints = document.querySelector(".player-O-points");
+let Xpoints = 0;
+let Opoints = 0;
 const Xmarker = '<img src="./assets/icon-x.svg" alt="">'
 const Omarker = '<img src="./assets/icon-o.svg" alt="">'
 
@@ -83,21 +107,30 @@ function createHumanPlayer(playerNum, mark) {
       return {
             player: playerNum,
             mark: mark,
+
             selectBox(box) {
                   if (this.mark === "x" && turn === "x") {
                         box.innerHTML = Xmarker;
-                        switchTurns();
                         checkForWin();
-                        if (playerO.player === "computer" && (checkForWin() !== true)) {
+                        if (checkForWin() === true) {
+                              Xpoints += 1;
+                              playerXPoints.innerHTML = Xpoints;
+                              displayEndGameModal();
+                        } else if (playerO.player === "computer" && (checkForWin() !== true)) {
+                              switchTurns();
                               setTimeout(() => {
                                     playerO.selectBox()
                               }, 1000);
                         }
                   } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
-                        switchTurns();
                         checkForWin();
-                        if (playerX.player === "computer" && (checkForWin() !== true)) {
+                        if (checkForWin() === true) {
+                              Opoints += 1;
+                              playerOPoints.innerHTML = Opoints;
+                              displayEndGameModal();
+                        } else if (playerX.player === "computer" && (checkForWin() !== true)) {
+                              switchTurns();
                               setTimeout(() => {
                                     playerX.selectBox()
                               }, 1000);
@@ -122,7 +155,14 @@ function createCompPlayer(mark) {
                         }
 
                         selectedBox.innerHTML = Xmarker;
-                        switchTurns();
+                        checkForWin()
+                        if (checkForWin() === true) {
+                              Xpoints += 1;
+                              playerXPoints.innerHTML = Xpoints;
+                              displayEndGameModal();
+                        } else {
+                              switchTurns();
+                        }
 
                   } else if((this.mark === "o") && (turn === "o")){
                         let selectedBox = boxes[Math.floor(Math.random() * 9)];
@@ -132,7 +172,14 @@ function createCompPlayer(mark) {
                         }
 
                         selectedBox.innerHTML = Omarker;
-                        switchTurns();
+                        checkForWin();
+                        if (checkForWin() === true) {
+                              Opoints += 1;
+                              playerOPoints.innerHTML = Opoints;
+                              displayEndGameModal();
+                        } else {
+                              switchTurns();
+                        }
                   }
             }
       }
@@ -143,32 +190,14 @@ function switchTurns() {
             turn = "o";
             document.querySelector(".turn-X").style.display = "none";
             document.querySelector(".turn-O").style.display = "block";
-            console.log(turn)
       } else {
             turn = "x";
             document.querySelector(".turn-X").style.display = "block";
             document.querySelector(".turn-O").style.display = "none";
-            console.log(turn)
       }
 }
 
-cpuGameBtn.onclick = () => {
-      startGame();
-      turn = "x";
 
-      if (selectedMark === markSelectors[0]) {
-            playerX = createHumanPlayer(1, "x")
-            playerO = createCompPlayer("o");
-            document.querySelector(".player-X").innerHTML = " (you)";
-            document.querySelector(".player-O").innerHTML = " (CPU)";
-      } else {
-            playerO = createHumanPlayer(1, "o")
-            playerX = createCompPlayer("x");
-            document.querySelector(".player-O").innerHTML = " (you)";
-            document.querySelector(".player-X").innerHTML = " (CPU)";
-            playerX.selectBox();
-      }
-}
 
 for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
@@ -180,18 +209,42 @@ for (let i = 0; i < boxes.length; i++) {
       }
 }
 
+
 function checkForWin() {
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Xmarker)) {
                   return true;
             } 
       }
-
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Omarker)) {
                   return true
             } 
       }   
+}
+
+function displayEndGameModal() {
+      gameEndModal.style.display = "grid";
+
+      if (playerX.player === "computer" || playerO.player === "computer") {
+            if (Xpoints > Opoints && playerX.player !== "computer") {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#31C3BD";
+            } else if (Xpoints < Opoints && playerX.player !== "computer") {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Oh no, you lost...";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#F2B137";
+            } else if (Xpoints > Opoints && playerX.player === "computer") {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Oh no, you lost...";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#31C3BD";
+            } else {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#F2B137";
+            }
+      }
 }
 
 // function checkForTie() {

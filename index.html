@@ -77,7 +77,7 @@
                   <div class="game-points">
                         <div class="point-box player1-points">
                               <div class="player">X<span class="player-X"></span></div>
-                              <div class="points">0</div>
+                              <div class="points player-X-points"></div>
                         </div>
                         <div class="point-box ties">
                               <div class="player">Ties</div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="point-box player2-points">
                               <div class="player">O<span class="player-O"></span></div>
-                              <div class="points">0</div>
+                              <div class="points player-O-points"></div>
                         </div>
                   </div>
             </section>
@@ -95,10 +95,10 @@
 
                   <div class="modal">
                         <div class="modal-content">
-                              <p class="modal-p">Oh no, you lost....</p>
+                              <p class="modal-p"></p>
                               <div class="announcement">
                                     <div class="winner-image">
-                                          <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg"><path d="M15.002 1.147 32 18.145 48.998 1.147a3 3 0 0 1 4.243 0l9.612 9.612a3 3 0 0 1 0 4.243L45.855 32l16.998 16.998a3 3 0 0 1 0 4.243l-9.612 9.612a3 3 0 0 1-4.243 0L32 45.855 15.002 62.853a3 3 0 0 1-4.243 0L1.147 53.24a3 3 0 0 1 0-4.243L18.145 32 1.147 15.002a3 3 0 0 1 0-4.243l9.612-9.612a3 3 0 0 1 4.243 0Z" fill="#31C3BD" fill-rule="evenodd"/></svg>
+                                 
                                     </div>
                                     <h1>Takes the round</h1>
                               </div>
@@ -111,16 +111,6 @@
             </section>
 
       </main>
-
-
-      <!-- Game board start -->
-
-      <!-- x/o icon --> turn
-
-      X (You) <!-- Your score -->
-      Ties <!-- Ties score -->
-      X (CPU) <!-- CPU score -->
-
 
       <script src="./src/script.js"></script>
 </body>
