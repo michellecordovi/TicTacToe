@@ -240,8 +240,8 @@ function checkForWin() {
             if (gameBoard[property].every(box => box.innerHTML === Xmarker)) {
                   return true;
             } else if(gameBoard[property].every(box => box.innerHTML === Omarker)) {
-                  return true
-            }
+                  return true;
+            } 
       }
 }
 
@@ -249,19 +249,19 @@ function displayEndGameModal() {
       gameEndModal.style.display = "grid";
 
       if (playerX.player === "computer" || playerO.player === "computer") {
-            if (Xpoints > Opoints && playerX.player !== "computer") {
+            if (turn === "x" && playerX.player !== "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#31C3BD";
-            } else if (Xpoints < Opoints && playerX.player !== "computer") {
+            } else if (turn === "o" && playerX.player !== "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "Oh no, you lost...";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#F2B137";
-            } else if (Xpoints > Opoints && playerX.player === "computer") {
+            } else if (turn === "x" && playerX.player === "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "Oh no, you lost...";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#31C3BD";
-            } else {
+            } else if(turn === "o" && playerX === "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#F2B137";
@@ -325,5 +325,8 @@ nextRoundButton.onclick = () => {
             }
       }
 
+      turn = "x";
+      document.querySelector(".turn-X").style.display = "block";
+       document.querySelector(".turn-O").style.display = "none";
       gameEndModal.style.display = "none";
 }
