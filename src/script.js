@@ -51,34 +51,20 @@ const boxes = document.getElementsByClassName("game-board-box");
 
 //game board
 const gameBoard = {
-      board: [
-            [boxes[0], boxes[1], boxes[2]],
-            [boxes[3], boxes[4], boxes[5]],
-            [boxes[6], boxes[7], boxes[8]]
-      ],
+     
+      row1: [boxes[0], boxes[1], boxes[2]],
+      row2: [boxes[3], boxes[4], boxes[5]],
+      row3: [boxes[6], boxes[7], boxes[8]],
 
-      get column1() {
-            return this.board.map(row => row[0])
-      },
+      column1: [boxes[0], boxes[3], boxes[6]],
+      column2: [boxes[1], boxes[4], boxes[7]],
+      column3: [boxes[2], boxes[5], boxes[8]],
 
-      get column2() {
-            return this.board.map(row => row[1])
-      },
+      diagonal1: [boxes[0], boxes[4], boxes[8]],
+      diagonal2: [boxes[2], boxes[4], boxes[6]]
 
-      get column3() {
-            return this.board.map(row => row[2])
-      },
-
-      get diagonal1() {
-            return [this.board[0][0], this.board[1][1], this.board[2][2]]
-      },
-
-      get diagonal2() {
-            return [this.board[0][2], this.board[1][1], this.board[2][0]]
-      }
 }
 
-//when button for CPU or 2 player is clicked, if x is selected then player X is you
 
 //start game buttons
 const startNewGameBtns = document.getElementsByClassName("new-game-btn");
@@ -125,7 +111,7 @@ function createCompPlayer(mark) {
 
                         selectedBox.innerHTML = Xmarker;
                         switchTurns();
-                        
+
                   } else if((this.mark === "o") && (turn === "o")){
                         let selectedBox = boxes[Math.floor(Math.random() * 9)];
 
@@ -173,14 +159,32 @@ for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
             if (turn === "x" && boxes[i].hasChildNodes() === false) {
                   playerX.selectBox(boxes[i]);
+                  checkForWinO();
                   if (playerO.player === "computer") {
                         playerO.selectBox();
                   }
             } else if (turn === "o" && boxes[i].hasChildNodes() === false){
                   playerO.selectBox(boxes[i]);
+                  checkForWinO();
                   if (playerX.player === "computer") {
                         playerX.selectBox();
                   }
             }
+      }
+}
+
+function checkForWinX() {
+      for (let property in gameBoard) {
+            if (gameBoard[property].every(box => box.innerHTML === Xmarker)) {
+                  console.log("X IS WINNERWINNER")
+               } 
+      }
+}
+
+function checkForWinO() {
+      for (let property in gameBoard) {
+            if (gameBoard[property].every(box => box.innerHTML === Omarker)) {
+                  console.log("O IS WINNERWINNER")
+               } 
       }
 }
