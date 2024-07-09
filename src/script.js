@@ -73,6 +73,24 @@ const gameBoard = {
 
 }
 
+twoPlayerBtn.onclick = () => {
+      startGame();
+      turn = "x";
+      playerXPoints.innerHTML = "0";
+      playerOPoints.innerHTML = "0";
+
+      if (selectedMark === markSelectors[0]) {
+            playerX = createHumanPlayer(1, "x")
+            playerO = createHumanPlayer(2, "o");
+            document.querySelector(".player-X").innerHTML = " (P1)";
+            document.querySelector(".player-O").innerHTML = " (P2)";
+      } else {
+            playerO = createHumanPlayer(1, "o")
+            playerX = createHumanPlayer(2, "x");
+            document.querySelector(".player-O").innerHTML = " (P1)";
+            document.querySelector(".player-X").innerHTML = " (P2)";
+      }
+}
 
 //START CPU GAME
 cpuGameBtn.onclick = () => {
@@ -125,6 +143,8 @@ function createHumanPlayer(playerNum, mark) {
                               setTimeout(() => {
                                     playerO.selectBox()
                               }, 1000);
+                        } else if (playerO.player !== "computer" && (checkForWin() !== true)) {
+                              switchTurns();
                         }
                   } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
@@ -138,6 +158,8 @@ function createHumanPlayer(playerNum, mark) {
                               setTimeout(() => {
                                     playerX.selectBox()
                               }, 1000);
+                        } else if (playerX.player !== "computer" && (checkForWin() !== true)) {
+                              switchTurns();
                         }
                   }
             }
@@ -295,6 +317,7 @@ quitButton.onclick = () => {
       startMenu.style.display = "grid";
 }
 
+//NEXT ROUND
 nextRoundButton.onclick = () => {
       for (let i = 0; i < boxes.length; i++) {
             while (boxes[i].firstChild) {
