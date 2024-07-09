@@ -184,6 +184,10 @@ main{
       align-items: center;
 }
 
+.game-board-box:hover {
+      cursor: pointer;
+}
+
 .game-points {
       height: 72px;
       display: grid;

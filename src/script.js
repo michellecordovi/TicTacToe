@@ -1,7 +1,19 @@
-//NEW GAME MENU START
+//PAGES
 const startMenu = document.getElementById("new-game-section");
 const gameBoardPage = document.getElementById("game-board");
 const gameEndModal = document.getElementById("game-end-modal")
+
+//BUTTONS
+//start game buttons
+const startNewGameBtns = document.getElementsByClassName("new-game-btn");
+const cpuGameBtn = startNewGameBtns[0];
+const twoPlayerBtn = startNewGameBtns[1];
+
+const boxes = document.getElementsByClassName("game-board-box");
+
+const restartButton = document.querySelector(".restart-btn");
+const quitButton = document.querySelector(".quit-btn");
+const nextRoundButton = document.querySelector(".next-round-btn");
 
 //select X or O
 const markSelectors = document.getElementsByClassName("mark");
@@ -45,10 +57,6 @@ function startGame(){
       }
 }
 
-//GAME INTERACTION
-const boxes = document.getElementsByClassName("game-board-box");
-const restartButton = document.querySelector(".restart-btn");
-
 //game board
 const gameBoard = {
      
@@ -65,11 +73,6 @@ const gameBoard = {
 
 }
 
-
-//start game buttons
-const startNewGameBtns = document.getElementsByClassName("new-game-btn");
-const cpuGameBtn = startNewGameBtns[0];
-const twoPlayerBtn = startNewGameBtns[1];
 
 //START CPU GAME
 cpuGameBtn.onclick = () => {
