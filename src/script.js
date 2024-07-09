@@ -87,9 +87,17 @@ function createHumanPlayer(playerNum, mark) {
                   if (this.mark === "x" && turn === "x") {
                         box.innerHTML = Xmarker;
                         switchTurns();
+                        checkForWin();
+                        if (playerO.player === "computer" && (checkForWin() !== true)) {
+                              playerO.selectBox();
+                        }
                   } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
                         switchTurns();
+                        checkForWin();
+                        if (playerX.player === "computer" && (checkForWin() !== true)) {
+                              playerX.selectBox();
+                        }
                   }
             }
       }
@@ -140,7 +148,6 @@ function switchTurns() {
       }
 }
 
-
 cpuGameBtn.onclick = () => {
       startGame();
       turn = "x";
@@ -159,32 +166,22 @@ for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
             if (turn === "x" && boxes[i].hasChildNodes() === false) {
                   playerX.selectBox(boxes[i]);
-                  checkForWinO();
-                  if (playerO.player === "computer") {
-                        playerO.selectBox();
-                  }
             } else if (turn === "o" && boxes[i].hasChildNodes() === false){
                   playerO.selectBox(boxes[i]);
-                  checkForWinO();
-                  if (playerX.player === "computer") {
-                        playerX.selectBox();
-                  }
             }
       }
 }
 
-function checkForWinX() {
+function checkForWin() {
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Xmarker)) {
-                  console.log("X IS WINNERWINNER")
-               } 
+                  return true;
+            } 
       }
-}
 
-function checkForWinO() {
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Omarker)) {
-                  console.log("O IS WINNERWINNER")
+                  return true
                } 
       }
 }
