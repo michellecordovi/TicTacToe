@@ -44,7 +44,10 @@ for (let i = 0; i < markSelectors.length; i++) {
 
 
 //function to start game
-function startGame(){
+function startGame() {
+      turn = "x"
+      playerXPoints.innerHTML = "0";
+      playerOPoints.innerHTML = "0";
       startMenu.style.display = "none";
       gameBoardPage.style.display = "grid";
 
@@ -75,10 +78,7 @@ const gameBoard = {
 
 twoPlayerBtn.onclick = () => {
       startGame();
-      turn = "x";
-      playerXPoints.innerHTML = "0";
-      playerOPoints.innerHTML = "0";
-
+     
       if (selectedMark === markSelectors[0]) {
             playerX = createHumanPlayer(1, "x")
             playerO = createHumanPlayer(2, "o");
@@ -95,9 +95,6 @@ twoPlayerBtn.onclick = () => {
 //START CPU GAME
 cpuGameBtn.onclick = () => {
       startGame();
-      turn = "x";
-      playerXPoints.innerHTML = "0";
-      playerOPoints.innerHTML = "0";
 
       if (selectedMark === markSelectors[0]) {
             playerX = createHumanPlayer(1, "x")
@@ -109,7 +106,9 @@ cpuGameBtn.onclick = () => {
             playerX = createCompPlayer("x");
             document.querySelector(".player-O").innerHTML = " (you)";
             document.querySelector(".player-X").innerHTML = " (CPU)";
-            playerX.selectBox();
+            setTimeout(() => {
+                  playerX.selectBox();
+            }, 500)
       }
 }
 
@@ -248,6 +247,7 @@ function checkForWin() {
 function displayEndGameModal() {
       gameEndModal.style.display = "grid";
 
+      //displays for CPU game
       if (playerX.player === "computer" || playerO.player === "computer") {
             if (turn === "x" && playerX.player !== "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
@@ -261,10 +261,41 @@ function displayEndGameModal() {
                   gameEndModal.querySelector(".modal-p").innerHTML = "Oh no, you lost...";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#31C3BD";
-            } else if(turn === "o" && playerX === "computer") {
+            } else if(turn === "o" && playerX.player === "computer") {
                   gameEndModal.querySelector(".modal-p").innerHTML = "You won!";
                   gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
                   gameEndModal.querySelector("h1").style.color = "#F2B137";
+            }
+      }
+
+      //displays for 2 player game
+      if (playerX.player !== "computer" && playerO.player !== "computer") {
+            if (turn === "x" && playerX.player === 1) {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Player 1 wins!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#31C3BD";  
+            } else if (turn === "o" && playerX.player === 1) {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Player 2 wins!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#F2B137";
+            } else if (turn === "x" && playerX.player === 2) {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Player 2 wins!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-x.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#31C3BD";  
+            } else if (turn === "o" && playerX.player === 2) {
+                  gameEndModal.querySelector(".modal-p").innerHTML = "Player 1 wins!";
+                  gameEndModal.querySelector(".winner-image").innerHTML = '<img src="./assets/icon-o.svg" alt="">';
+                  gameEndModal.querySelector("h1").style.color = "#F2B137";
+            }
+      }
+}
+
+function checkForTie() {
+      for (let i = 0; i < boxes.length; i++) {
+            if (!boxes[i].hasChildNodes) {
+                  return false;
+            } else {
+                  return true
             }
       }
 }
