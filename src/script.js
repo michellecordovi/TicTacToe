@@ -89,14 +89,18 @@ function createHumanPlayer(playerNum, mark) {
                         switchTurns();
                         checkForWin();
                         if (playerO.player === "computer" && (checkForWin() !== true)) {
-                              playerO.selectBox();
+                              setTimeout(() => {
+                                    playerO.selectBox()
+                              }, 1000);
                         }
                   } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
                         switchTurns();
                         checkForWin();
                         if (playerX.player === "computer" && (checkForWin() !== true)) {
-                              playerX.selectBox();
+                              setTimeout(() => {
+                                    playerX.selectBox()
+                              }, 1000);
                         }
                   }
             }
@@ -182,6 +186,14 @@ function checkForWin() {
       for (let property in gameBoard) {
             if (gameBoard[property].every(box => box.innerHTML === Omarker)) {
                   return true
-               } 
-      }
+            } 
+      }   
 }
+
+// function checkForTie() {
+//       let boxesArray = Array.from(boxes);
+//       let filledBoxes = boxesArray.filter(box => box.hasChildNodes())
+//       if (filledBoxes.length === boxesArray.length){
+//             console.log("ITS A TIE")
+//       }
+// }
