@@ -1,7 +1,8 @@
 //PAGES
 const startMenu = document.getElementById("new-game-section");
 const gameBoardPage = document.getElementById("game-board");
-const gameEndModal = document.getElementById("game-end-modal")
+const gameEndModal = document.getElementById("game-end-modal");
+const roundTiedModal = document.getElementById("round-tied-modal");
 
 //BUTTONS
 //start game buttons
@@ -12,8 +13,8 @@ const twoPlayerBtn = startNewGameBtns[1];
 const boxes = document.getElementsByClassName("game-board-box");
 
 const restartButton = document.querySelector(".restart-btn");
-const quitButton = document.querySelector(".quit-btn");
-const nextRoundButton = document.querySelector(".next-round-btn");
+const quitButtons = document.getElementsByClassName("quit-btn");
+const nextRoundButtons = document.getElementsByClassName("next-round-btn");
 
 //select X or O
 const markSelectors = document.getElementsByClassName("mark");
@@ -295,7 +296,7 @@ function checkForTie() {
             if (!boxes[i].hasChildNodes) {
                   return false;
             } else {
-                  return true
+      
             }
       }
 }
@@ -331,33 +332,38 @@ restartButton.onclick = () => {
 }
 
 //QUIT GAME
-quitButton.onclick = () => {
-      for (let i = 0; i < boxes.length; i++) {
-            while (boxes[i].firstChild) {
-                  boxes[i].removeChild(boxes[i].firstChild)
+for (let i = 0; i < quitButtons.length; i++) {
+      quitButtons[i].onclick = () => {
+            for (let i = 0; i < boxes.length; i++) {
+                  while (boxes[i].firstChild) {
+                        boxes[i].removeChild(boxes[i].firstChild)
+                  }
             }
+      
+            playerX = undefined;
+            playerO = undefined;
+            turn="x"
+            Xpoints = 0;
+            Opoints = 0;
+            gameEndModal.style.display = "none";
+            gameBoardPage.style.display = "none";
+            startMenu.style.display = "grid";
       }
-
-      playerX = undefined;
-      playerO = undefined;
-      turn="x"
-      Xpoints = 0;
-      Opoints = 0;
-      gameEndModal.style.display = "none";
-      gameBoardPage.style.display = "none";
-      startMenu.style.display = "grid";
 }
 
-//NEXT ROUND
-nextRoundButton.onclick = () => {
-      for (let i = 0; i < boxes.length; i++) {
-            while (boxes[i].firstChild) {
-                  boxes[i].removeChild(boxes[i].firstChild)
-            }
-      }
 
-      turn = "x";
-      document.querySelector(".turn-X").style.display = "block";
-       document.querySelector(".turn-O").style.display = "none";
-      gameEndModal.style.display = "none";
+//NEXT ROUND
+for (let i = 0; i < nextRoundButtons.length; i++) {
+      nextRoundButtons[i].onclick = () => {
+            for (let i = 0; i < boxes.length; i++) {
+                  while (boxes[i].firstChild) {
+                        boxes[i].removeChild(boxes[i].firstChild)
+                  }
+            }
+      
+            turn = "x";
+            document.querySelector(".turn-X").style.display = "block";
+             document.querySelector(".turn-O").style.display = "none";
+            gameEndModal.style.display = "none";
+      }
 }
