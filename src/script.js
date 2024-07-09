@@ -159,9 +159,13 @@ cpuGameBtn.onclick = () => {
       if (selectedMark === markSelectors[0]) {
             playerX = createHumanPlayer(1, "x")
             playerO = createCompPlayer("o");
+            document.querySelector(".player-X").innerHTML = " (you)";
+            document.querySelector(".player-O").innerHTML = " (CPU)";
       } else {
             playerO = createHumanPlayer(1, "o")
             playerX = createCompPlayer("x");
+            document.querySelector(".player-O").innerHTML = " (you)";
+            document.querySelector(".player-X").innerHTML = " (CPU)";
             playerX.selectBox();
       }
 }
