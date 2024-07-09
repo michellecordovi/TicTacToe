@@ -47,6 +47,7 @@ function startGame(){
 
 //GAME INTERACTION
 const boxes = document.getElementsByClassName("game-board-box");
+const restartButton = document.querySelector(".restart-btn");
 
 //game board
 const gameBoard = {
@@ -198,7 +199,6 @@ function switchTurns() {
 }
 
 
-
 for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
             if (turn === "x" && boxes[i].hasChildNodes() === false) {
@@ -254,3 +254,25 @@ function displayEndGameModal() {
 //             console.log("ITS A TIE")
 //       }
 // }
+
+//RESTART
+restartButton.onclick = () => {
+      turn = "x";
+      Xpoints = 0;
+      Opoints = 0;
+      playerXPoints.innerHTML = Xpoints;
+      playerOPoints.innerHTML = Opoints;
+
+      for (let i = 0; i < boxes.length; i++) {
+            while (boxes[i].firstChild) {
+                  boxes[i].removeChild(boxes[i].firstChild)
+            }
+      }
+
+      if (playerX.player === "computer") {
+            setTimeout(() => {
+                  playerX.selectBox();
+            }, 500)
+      }
+
+}
