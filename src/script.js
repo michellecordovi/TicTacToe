@@ -51,6 +51,7 @@ for (let i = 0; i < markSelectors.length; i++) {
 //function to start game
 function startGame() {
       turn = "x"
+      numOfTies = 0;
       playerXPoints.innerHTML = "0";
       playerOPoints.innerHTML = "0";
       tiePoints.innerHTML = "0"
@@ -142,17 +143,21 @@ function createHumanPlayer(playerNum, mark) {
                   if (this.mark === "x" && turn === "x") {
                         box.innerHTML = Xmarker;
                         checkForWin();
-                        if (checkForWin() === true) {
+                        if (checkForWin() === true && checkForTie() !==true) {
                               Xpoints += 1;
                               playerXPoints.innerHTML = Xpoints;
                               displayEndGameModal();
-                        } else if (playerO.player === "computer" && (checkForWin() !== true)) {
+                        } else if (playerO.player === "computer" && (checkForWin() !== true) && (checkForTie() !== true)) {
                               switchTurns();
                               setTimeout(() => {
                                     playerO.selectBox()
                               }, 1000);
-                        } else if (playerO.player !== "computer" && (checkForWin() !== true)) {
+                        } else if (playerO.player !== "computer" && (checkForWin() !== true) && checkForTie () !== true) {
                               switchTurns();
+                        } else if (checkForTie() === true) {
+                              roundTiedModal.style.display = "grid";
+                              numOfTies += 1;
+                              tiePoints.innerHTML = numOfTies;
                         }
 
                   } else if(this.mark === "o" && turn === "o"){
@@ -190,33 +195,42 @@ function createCompPlayer(mark) {
                         }
 
                         selectedBox.innerHTML = Xmarker;
-                        checkForTie();
                         checkForWin();
-                        if (checkForWin() === true) {
+                        checkForTie();
+                        if (checkForWin() === true && checkForTie() !== true) {
                               Xpoints += 1;
                               playerXPoints.innerHTML = Xpoints;
                               displayEndGameModal();
-                        } else {
+                        } else if(checkForWin() !== true && checkForTie() !==true) {
                               switchTurns();
+                        } else if (checkForWin() !== true && checkForTie() === true) {
+                              roundTiedModal.style.display = "grid";
+                              numOfTies += 1;
+                              tiePoints.innerHTML = numOfTies;
                         }
 
-                  } else if((this.mark === "o") && (turn === "o")){
-                        let selectedBox = boxes[Math.floor(Math.random() * 9)];
-
-                        while (selectedBox.hasChildNodes() === true) {
-                              selectedBox = boxes[Math.floor(Math.random() * 9)]
-                        }
-
-                        selectedBox.innerHTML = Omarker;
+                  } else if ((this.mark === "o") && (turn === "o")) {
                         checkForTie();
-                        checkForWin();
-                        if (checkForWin() === true) {
-                              Opoints += 1;
-                              playerOPoints.innerHTML = Opoints;
-                              displayEndGameModal();
-                        } else {
-                              switchTurns();
+                        if (checkForTie() !== true) {
+                              let selectedBox = boxes[Math.floor(Math.random() * 9)];
+
+                              while (selectedBox.hasChildNodes() === true) {
+                                    selectedBox = boxes[Math.floor(Math.random() * 9)]
+                              }
+
+                              selectedBox.innerHTML = Omarker;
+                              checkForWin();
+                              if (checkForWin() === true && checkForTie() !== true) {
+                                    Opoints += 1;
+                                    playerOPoints.innerHTML = Opoints;
+                                    displayEndGameModal();
+                              } else if (checkForWin() !== true && checkForTie() === true) { 
+                                    checkForTie();
+                              } else if(checkForWin() !== true && checkForTie() !==true) {
+                                    switchTurns();
+                              }
                         }
+                        
                   }
             }
       }
@@ -239,10 +253,8 @@ for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
             if (turn === "x" && boxes[i].hasChildNodes() === false) {
                   playerX.selectBox(boxes[i]);
-                  checkForTie();
             } else if (turn === "o" && boxes[i].hasChildNodes() === false){
                   playerO.selectBox(boxes[i]);
-                  checkForTie();
             }
       }
 }
@@ -309,13 +321,13 @@ function checkForTie() {
       for (let i = 0; i < boxes.length; i++) {
             if (boxes[i].hasChildNodes() === true) {
                   filledBoxes.push(boxes[i])
-            }
+            } 
       }
 
       if (boxes.length === filledBoxes.length && checkForWin() !==true) {
-            roundTiedModal.style.display = "grid";
-            numOfTies += 1;
-            tiePoints.innerHTML = numOfTies
+            return true;
+      } else {
+            return false;
       }
 }
 
@@ -329,6 +341,8 @@ yesRestart.onclick = () => {
       turn = "x";
       Xpoints = 0;
       Opoints = 0;
+      numOfTies = 0;
+      tiePoints.innerHTML = numOfTies;
       playerXPoints.innerHTML = Xpoints;
       playerOPoints.innerHTML = Opoints;
       restartModal.style.display = "none";
@@ -364,6 +378,8 @@ for (let i = 0; i < quitButtons.length; i++) {
             turn="x"
             Xpoints = 0;
             Opoints = 0;
+            numOfTies = 0;
+            tiePoints.innerHTML = numOfTies;
             gameEndModal.style.display = "none";
             gameBoardPage.style.display = "none";
             roundTiedModal.style.display = "none";
