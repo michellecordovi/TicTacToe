@@ -49,6 +49,7 @@ function startGame() {
       turn = "x"
       playerXPoints.innerHTML = "0";
       playerOPoints.innerHTML = "0";
+      tiePoints.innerHTML = "0"
       startMenu.style.display = "none";
       gameBoardPage.style.display = "grid";
 
@@ -119,8 +120,11 @@ let playerO;
 let turn;
 let playerXPoints = document.querySelector(".player-X-points");
 let playerOPoints = document.querySelector(".player-O-points");
+let tiePoints = document.querySelector(".tie-points");
 let Xpoints = 0;
 let Opoints = 0;
+let numOfTies = 0;
+
 const Xmarker = '<img src="./assets/icon-x.svg" alt="">'
 const Omarker = '<img src="./assets/icon-o.svg" alt="">'
 
@@ -181,7 +185,8 @@ function createCompPlayer(mark) {
                         }
 
                         selectedBox.innerHTML = Xmarker;
-                        checkForWin()
+                        checkForTie();
+                        checkForWin();
                         if (checkForWin() === true) {
                               Xpoints += 1;
                               playerXPoints.innerHTML = Xpoints;
@@ -198,6 +203,7 @@ function createCompPlayer(mark) {
                         }
 
                         selectedBox.innerHTML = Omarker;
+                        checkForTie();
                         checkForWin();
                         if (checkForWin() === true) {
                               Opoints += 1;
@@ -228,8 +234,10 @@ for (let i = 0; i < boxes.length; i++) {
       boxes[i].onclick = () => {
             if (turn === "x" && boxes[i].hasChildNodes() === false) {
                   playerX.selectBox(boxes[i]);
+                  checkForTie();
             } else if (turn === "o" && boxes[i].hasChildNodes() === false){
                   playerO.selectBox(boxes[i]);
+                  checkForTie();
             }
       }
 }
@@ -292,22 +300,20 @@ function displayEndGameModal() {
 }
 
 function checkForTie() {
+      let filledBoxes= [];
       for (let i = 0; i < boxes.length; i++) {
-            if (!boxes[i].hasChildNodes) {
-                  return false;
-            } else {
-      
+            if (boxes[i].hasChildNodes() === true) {
+                  filledBoxes.push(boxes[i])
             }
+      }
+
+      if (boxes.length === filledBoxes.length && checkForWin() !==true) {
+            roundTiedModal.style.display = "grid";
+            numOfTies += 1;
+            tiePoints.innerHTML = numOfTies
       }
 }
 
-// function checkForTie() {
-//       let boxesArray = Array.from(boxes);
-//       let filledBoxes = boxesArray.filter(box => box.hasChildNodes())
-//       if (filledBoxes.length === boxesArray.length){
-//             console.log("ITS A TIE")
-//       }
-// }
 
 //RESTART
 restartButton.onclick = () => {
@@ -347,6 +353,7 @@ for (let i = 0; i < quitButtons.length; i++) {
             Opoints = 0;
             gameEndModal.style.display = "none";
             gameBoardPage.style.display = "none";
+            roundTiedModal.style.display = "none";
             startMenu.style.display = "grid";
       }
 }
@@ -360,10 +367,17 @@ for (let i = 0; i < nextRoundButtons.length; i++) {
                         boxes[i].removeChild(boxes[i].firstChild)
                   }
             }
+
+            if (playerX.player === "computer") {
+                  setTimeout(() => {
+                        playerX.selectBox();
+                  }, 500)
+            }
       
             turn = "x";
             document.querySelector(".turn-X").style.display = "block";
-             document.querySelector(".turn-O").style.display = "none";
+            document.querySelector(".turn-O").style.display = "none";
             gameEndModal.style.display = "none";
+            roundTiedModal.style.display = "none";
       }
 }

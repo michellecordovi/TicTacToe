@@ -331,6 +331,7 @@ h1{
       align-items: center;
 }
 
-.round-tied-modal h1{
+#round-tied{
       color:#A8BFC9;
+      letter-spacing: 2.5px;
 }
