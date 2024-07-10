@@ -240,7 +240,7 @@ main{
       position: absolute;
       height: 100%;
       width: 100%;
-      background-color: rgba(0, 0, 0, 0.692);
+      background-color: rgba(0, 0, 0, 0.527);
       z-index: 2;
 }
 
@@ -334,4 +334,45 @@ h1{
 #round-tied{
       color:#A8BFC9;
       letter-spacing: 2.5px;
+}
+
+/* RESTART MODAL */
+#restart-modal{
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 2;
+      display: none;
+      align-items: center;
+}
+
+#restart-modal .modal-content {
+      gap: 30px;
+}
+
+#restart-modal .no-cancel,
+#restart-modal .yes-restart{
+      width: 146px;
+      height: 48px;
+      border-radius: 10px;
+      color:#1A2A33;
+      font-size: 16px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      border: none;
+}
+
+#restart-modal .no-cancel:hover,
+#restart-modal .yes-restart:hover{
+      cursor: pointer;
+}
+
+#restart-modal .no-cancel {
+      background-color: #A8BFC9;
+      box-shadow: 0px 4px #a8bfc9a0;
+}
+
+#restart-modal .yes-restart{
+      background-color: #F2B137;
+      box-shadow: 0px 4px #f2b1379e;
 }

@@ -3,6 +3,7 @@ const startMenu = document.getElementById("new-game-section");
 const gameBoardPage = document.getElementById("game-board");
 const gameEndModal = document.getElementById("game-end-modal");
 const roundTiedModal = document.getElementById("round-tied-modal");
+const restartModal = document.getElementById("restart-modal")
 
 //BUTTONS
 //start game buttons
@@ -13,6 +14,9 @@ const twoPlayerBtn = startNewGameBtns[1];
 const boxes = document.getElementsByClassName("game-board-box");
 
 const restartButton = document.querySelector(".restart-btn");
+const noCancel = document.querySelector(".no-cancel")
+const yesRestart = document.querySelector(".yes-restart")
+
 const quitButtons = document.getElementsByClassName("quit-btn");
 const nextRoundButtons = document.getElementsByClassName("next-round-btn");
 
@@ -150,6 +154,7 @@ function createHumanPlayer(playerNum, mark) {
                         } else if (playerO.player !== "computer" && (checkForWin() !== true)) {
                               switchTurns();
                         }
+
                   } else if(this.mark === "o" && turn === "o"){
                         box.innerHTML = Omarker;
                         checkForWin();
@@ -317,11 +322,16 @@ function checkForTie() {
 
 //RESTART
 restartButton.onclick = () => {
+      restartModal.style.display = "grid";
+}
+
+yesRestart.onclick = () => {
       turn = "x";
       Xpoints = 0;
       Opoints = 0;
       playerXPoints.innerHTML = Xpoints;
       playerOPoints.innerHTML = Opoints;
+      restartModal.style.display = "none";
 
       for (let i = 0; i < boxes.length; i++) {
             while (boxes[i].firstChild) {
@@ -334,7 +344,10 @@ restartButton.onclick = () => {
                   playerX.selectBox();
             }, 500)
       }
+}
 
+noCancel.onclick = () => {
+      restartModal.style.display = "none";
 }
 
 //QUIT GAME
