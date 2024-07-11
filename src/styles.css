@@ -22,6 +22,19 @@ main{
       align-items: center;
 }
 
+h1{
+      font-size: 40px;
+      letter-spacing: 2.5px;
+}
+
+
+@media only screen and (max-width: 560px){
+      h1 {
+            font-size: 24px;
+      }
+}
+
+
 /* NEW GAME MENU */
 #new-game-section {
       color: #A8BFC9;
@@ -295,7 +308,7 @@ main{
       align-items: center;
 }
 
-#modal-overlay{
+.modal-overlay{
       position: absolute;
       height: 100%;
       width: 100%;
@@ -317,6 +330,8 @@ main{
 .modal-content{
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: 1rem;
 }
 
@@ -333,18 +348,6 @@ main{
       justify-content: center;
       align-items: center;
       gap: 2rem;
-}
-
-h1{
-      font-size: 40px;
-      color:#31C3BD;
-      letter-spacing: 2.5px;
-}
-
-@media only screen and (max-width: 560px){
-      h1 {
-            font-size: 24px;
-      }
 }
 
 .modal-btns{
@@ -384,6 +387,19 @@ h1{
       box-shadow: 0px 4px #f2b1379e;
 }
 
+@media only screen and (max-width: 560px) {
+     .announcement {
+            gap: 1rem;
+     }
+
+     .winner-image{
+            height:28px;
+     }
+     
+      .winner-image img{
+            max-width: 28px;
+      }
+}
 
 
 /* ROUND TIED MODAL */
@@ -396,10 +412,20 @@ h1{
       align-items: center;
 }
 
-#round-tied{
+#round-tied,
+#restart-game{
       color:#A8BFC9;
       letter-spacing: 2.5px;
 }
+
+@media only screen and (max-width: 560px){
+      #round-tied,
+      #restart-game{ 
+            font-size: 24px;
+           text-align: center;
+      }
+}
+
 
 /* RESTART MODAL */
 #restart-modal{
